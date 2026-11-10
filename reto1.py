@@ -118,6 +118,117 @@
 
 # 3.3 ¿Qué unidades se utilizan para la temperatura?
 # Se utilizan grados Celsius (°C).
+#3.4. ¿Qué tipos de dato devuelven diarios y responde: type(datos['daily']) , type(datos['daily']['time']) y type(datos['daily']["temperature_2m_mean"]) ?
+#En los datos daily son datos de tipo nombre, de time son datos integer, temperature 2m_mean tienen datos de temperatura.
+#3.5. ¿Cuántas fechas y temperaturas has obtenido?
+  #"start_date": "2025-01-01",
+   # "end_date": "2025-01-31",
+#Las que escoge las fechas de inicio y las fechas de final .
+#Temperaturas son la temperatura media, la temperauta máxima y la temperatura mínima.
+#3.6 Comprueba que las listas de fechas, temperaturas medias, máximas y mínimas tienen la misma longitud. ¿Por qué deben coincidir?
+#Deben de conocer los datos en el núemro.
+#3.7. Muestra la primera fecha, la temperatura media del primer día y la máxima del último.
+#"temperature_2m_mean": [7.1, 7.3, 7.4, 8.1, 9.5, 10.2, 7.1, 8.3, 12.3, 10.3, 12, 10.6, 6, 4.3, 5.2, 5.2, 5.1, 6, 6.3, 7.5, 12.8, 14.4, 12.6, 10.4, 10.2, 11.3, 14.8, 9.1, 8.1, 7.4, 6.6],
+ #   "temperature_2m_max": [12.8, 12.9, 12.9, 12.6, 15.8, 12, 10.8, 15.2, 15.7, 14.6, 14.8, 14.1, 11, 10.7, 10.9, 9.1, 11.2, 11.1, 11.4, 13, 17.5, 18.6, 17.1, 16, 13.5, 17.5, 16.8, 11.1, 11.9, 10.5, 10.5],
+  #  "temperature_2m_min": [2.4, 2.5, 3, 3.9, 3.5, 7.4, 3.1, 3.7, 9.2, 7, 9.5, 7.1, 0.9, -1.1, 0, 2.5, 0, 2.2, 1.9, 2.4, 9.1, 10.2, 9.4, 5.8, 6.1, 4.1, 10.3, 6.8, 3.2, 5.2, 3.5]
+  #}
+#}
+#7.1 es la temperatura media del primer día y y la máxima del último día sería de 
+#3.8 ¿Qué sucede si intentas acceder a una posición que no existe?
+#Si accedemos a una posición que no existe, nos daría un valor que sería cero
+#3.9) ¿Cómo comprobarías si una clave está presente antes de utilizarla?
+#Recorreriamos mediante un bucle for el diccionario .
+
+#4)Calcula estadísticas con las temperaturas:
+
+temperaturas = datos['daily']["temperature_2m_mean"] print(temperaturas)
+#4.1. ¿Cuáles son las cinco primeras y las cinco últimas temperaturas?
+#4) "temperature_2m_mean": [7.1, 7.3, 7.4, 8.1, 9.5]
+#"temperature_2m_max": [12.8, 12.9, 12.9, 12.6, 15.8]
+#  "temperature_2m_min": [2.4, 2.5, 3, 3.9, 3.5]
+#4.2 ¿Cuántos valores contiene la lista?
+#Cada una de las temperaturas tienen 31 valores .
+#4.3) ¿Cuál es la diferencia entre la temperatura más alta y la más baja?
+#Temperatura máxima: 17,5 °C.
+#Temperatura mínima: 4,1 °C.
+#4.4) diferencias = [
+    #maximo - minimo
+    #for maximo, minimo in zip(
+        #temperature_2m_max,
+        #temperature_2m_min
+    #)
+#]
+
+#4.5. Crea una lista con las temperaturas superiores a 15 °C y otra con temperaturas inferiores a 10 °C.
+
+temperaturas_superior = [temp for temp  in temperatura if temp > 15 ]
+temperatura_bajas = [temp for temp in temperaturas if temp < 10]
+#creamos la lista , y dentro ejecutamos un for que nos lo busque en el dicionario de temperaturas y con el if le metemos la condición .
+
+print("Temperaturas superiores a 15 ºC:", temperaturas_altas)
+print("Temperaturas inferiores a 10 ºC:", temperaturas_bajas)
+#4.6 mediante un print, imprimimos cada una de las temperaturas .
+
+#4.7  Comprueba si todas las temperaturas son superiores a 0 °C y si alguna supera los 20 °C.
+#comprobamos si las temperaturas son superiores a cero, y si alguna supera los 20 :
+todas_mayores_cero = all(temp > 0 for temp in temperaturas)
+alguna_mayor_veinte = any(temp > 20 for temp in temperaturas)
+#4.8 Ordena las temperaturas de menor a mayor sin alterar la lista original :
+alguna_mayor_veinte = dict(temp  for temp in temperaturas)
+
+#5.1 Transforma y filtra datos :
+# f = ((9 / 5)*C + 32)
+#convertimos de grados centigrados a fahrenheit :
+def grados_fahrenhetit():
+    for temp in temperaturas:
+        temp = ((9 / 5)*temp + 32)
+return(print(f"los grados fahrenheit son {temp}")
+#5.2. Crea listas con temperaturas en dos rangos, un rango con las temperaturas menor o igual a la media y otra como superior a la media, usa las temperaturas en ºC.
+# 5. Transformar y filtrar datos
+fahrenheit = [(t * 9/5) + 32 for t in temperaturas]
+print("En Fahrenheit:", fahrenheit)
+
+media_mes = sum(temperaturas) / len(temperaturas)
+menor_media = [t for t in temperaturas if t <= media_mes]
+mayor_media = [t for t in temperaturas if t > media_mes]
+
+clasificacion_15 = ["inferior" if t < 15 else ("igual" if t == 15 else "superior") for t in temperaturas]
+
+indices_15 = [i for i, t in enumerate(temperaturas) if t > 15]
+print("Índices días > 15ºC:", indices_15)
+
+tuplas_cf = [(t, (t * 9/5) + 32) for t in temperaturas]
+
+variacion = [round(temperaturas[i] - temperaturas[i-1], 2) for i in range(1, len(temperaturas))]
+print("Variación diaria:", variacion)
+
+dias_tipo = [
+    "frío" if t < 7 else ("templado" if t <= 12 else "cálido") 
+    for t in temperaturas
+]
+print("Tipos de día:", dias_tipo)
+#clasifica cada temperatura como inferior, igual o superior a 15 
+def rangos():
+    for temp in temperaturas:
+print(max(diferencias))
+#6:Relaciona cada valor con su fecha:
+#fecha: {
+    #"media": media,
+    #"maxima": maxima,
+    #"minima", minima
+    #}
+amplitudes_diarias = {}
+for fecha, valores in registros_meteorologicos.items():
+    amplitud = valores['maxima'] - valores['minima']
+    amplitudes_diarias[fecha] = round(amplitud, 2)
+
+print("Amplitud térmica diaria:", amplitudes_diarias)
+#7:Analiza el periodo:
+#Calcula medidas descriptivas para las temperaturas medias, máximas y mínimas.  Estas son: Media aritmética: es el valor que obtenemos al sumar todas las temperaturas y dividir el resultado entre el número de temperaturas. Mediana: es el valor que queda en el centro cuando ordenamos todas las temperaturas de menor a mayor (si tenemos un número impar de temperaturas, la mediana es el valor central, si tenemos un número par, la mediana es la media de los dos valores centrales) Valor máximo y mínimo: son, respectivamente, el mayor y el menor valor del conjunto. Rango: es la diferencia entre el valor máximo y el valor mínimo.Varianza: es una medida que indica cuánto se alejan, en conjunto, los valores respecto a la media, para calcularla, se determina la diferencia entre cada temperatura y la media, se elevan esas diferencias al cuadrado y se calcula su promedio Desviación típica: es la raíz cuadrada de la varianza. Nos permite medir la dispersión de los valores. Escribe conclusiones explicando qué significa cada resultado. No presentes únicamente números: indica qué muestran sobre el periodo estudiado.
+
+       
+
+print(diferencias.index(max(diferencias)) + 1)
 generationtime_ms	0.11861324310302734
 utc_offset_seconds	3600
 timezone	"Europe/Madrid"
@@ -152,3 +263,5 @@ print(type(parametros))
 print(respuesta.url)
 diarios = datos["daily"]
 print(diarios.keys())
+ 
+
