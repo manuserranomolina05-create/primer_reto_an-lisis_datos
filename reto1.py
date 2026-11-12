@@ -1,3 +1,4 @@
+import statistics
 #Consulta, tratamiento y análisis de datos meteorológicos : 
 1#Exploramos la api:
 {
@@ -226,7 +227,96 @@ print("Amplitud térmica diaria:", amplitudes_diarias)
 #7:Analiza el periodo:
 #Calcula medidas descriptivas para las temperaturas medias, máximas y mínimas.  Estas son: Media aritmética: es el valor que obtenemos al sumar todas las temperaturas y dividir el resultado entre el número de temperaturas. Mediana: es el valor que queda en el centro cuando ordenamos todas las temperaturas de menor a mayor (si tenemos un número impar de temperaturas, la mediana es el valor central, si tenemos un número par, la mediana es la media de los dos valores centrales) Valor máximo y mínimo: son, respectivamente, el mayor y el menor valor del conjunto. Rango: es la diferencia entre el valor máximo y el valor mínimo.Varianza: es una medida que indica cuánto se alejan, en conjunto, los valores respecto a la media, para calcularla, se determina la diferencia entre cada temperatura y la media, se elevan esas diferencias al cuadrado y se calcula su promedio Desviación típica: es la raíz cuadrada de la varianza. Nos permite medir la dispersión de los valores. Escribe conclusiones explicando qué significa cada resultado. No presentes únicamente números: indica qué muestran sobre el periodo estudiado.
 
-       
+#media = statics.mean(temperaturas) lo hacemos para lograr la temperatura
+#1 media aritmetica:
+media = []
+for temp in temperaturas:
+    media = statistics.mean(temperaturas)
+    media += 1
+print(media)
+
+media = []
+for temp in temperaturas:
+    mediana = mediana = statistics.median(temperaturas)
+    mediana += 1
+print(f" la mediana es {mediana}")
+
+#calculamos el maximo = max(temperaturas)
+minimo = min(temperaturas)
+rango = maximo - minimo
+print(rango)
+#desviación típica ( o estandar)
+varianza = statistics.pvariance(temperaturas)
+print(varianza )
+#6.Desviacion tipica :
+desviacion_tipica = statistics.pstdev(temperaturas)
+print(desviacion_tipica )
+    
+#8 Estudiamos la evolucion temporal :
+#8.1. Muestra las temperaturas medias junto con sus fechas:
+for temp in temp       
+#8.2 Filtra la primera semana y la segunda quincena
+import statistics
+import matplotlib.pyplot as plt
+
+fechas  = datos["daily"]["time"]
+medias  = datos["daily"]["temperature_2m_mean"]
+maximas = datos["daily"]["temperature_2m_max"]
+minimas = datos["daily"]["temperature_2m_min"]
+for fecha, temp in zip(fechas, medias):
+    print(fecha, temp)
+    primera_semana   = list(zip(fechas[:7], medias[:7]))     # días 1 al 7
+segunda_quincena = list(zip(fechas[15:], medias[15:]))   # días 16 al 31
+
+print("Primera semana:", primera_semana)
+print("Segunda quincena:", segunda_quincena)
+#8.3  Calcula las variaciones entre días consecutivos e identifica el mayor aumento y descenso.
+variaciones = [round(medias[i] - medias[i-1], 2) for i in range(1, len(medias))]
+
+mayor_aumento = max(variaciones)
+mayor_descenso = min(variaciones)
+
+i_aum = variaciones.index(mayor_aumento)
+i_des = variaciones.index(mayor_descenso)
+
+print(f"Mayor aumento: {mayor_aumento} °C entre {fechas[i_aum]} y {fechas[i_aum+1]}")
+print(f"Mayor descenso: {mayor_descenso} °C entre {fechas[i_des]} y {fechas[i_des+1]}")
+media_movil = [round(statistics.mean(medias[i:i+3]), 2) for i in range(len(medias) - 2)]
+
+# Se asigna al día central de cada ventana (fechas[1] a fechas[-2])
+for fecha, original, suavizada in zip(fechas[1:-1], medias[1:-1], media_movil):
+    print(f"{fecha}  original: {original:>5}  media móvil: {suavizada:>5}")
+#8.4 Calcula una media móvil de tres días y compárala con los valores originales.
+media_movil = [round(statistics.mean(medias[i:i+3]), 2) for i in range(len(medias) - 2)]
+
+# Se asigna al día central de cada ventana (fechas[1] a fechas[-2])
+for fecha, original, suavizada in zip(fechas[1:-1], medias[1:-1], media_movil):
+    print(f"{fecha}  original: {original:>5}  media móvil: {suavizada:>5}")
+#8.5 Divide el periodo en semanas y calcula la media de cada una.
+for inicio in range(0, len(medias), 7):
+    bloque = medias[inicio:inicio + 7]
+    fin = inicio + len(bloque) - 1
+    print(f"Semana {inicio // 7 + 1} ({fechas[inicio]} a {fechas[fin]}): "
+          f"{round(statistics.mean(bloque), 2)} °C")
+import pandas as pd
+import matplotlib.pyplot as plt
+#Las temperaturas por sí solas son solo números: sin la fecha no sabemos a qué día pertenece cada una. Conservar las fechas permite identificar cuándo ocurrió el mayor aumento o descenso, filtrar periodos concretos (semanas, quincenas), comparar tramos del mes y ver la evolución en el tiempo. Además, las listas de fechas y temperaturas están emparejadas por posición, así que si ordenáramos solo las temperaturas perderíamos esa correspondencia y los resultados no tendrían sentido.
+plt.scatter(minimas, maximas)
+plt.xlabel("Temperatura mínima (°C)")
+plt.ylabel("Temperatura máxima (°C)")
+plt.title("Temperatura mínima vs máxima - Jaén, enero 2025")
+plt.grid(True)
+plt.show()
+#Hacemos el análisis de los datos meteorológicos con Pandas y Matplotlib. Primero, cargamos los datos desde un archivo CSV que contiene las temperaturas medias junto con sus fechas. Luego, mostramos las temperaturas medias junto con sus fechas y filtramos periodos específicos, como la primera semana y la segunda quincena del mes.
+
+
+df = pd.read_csv("temperaturas.csv", parse_dates=["fecha"])
+    #1.Mostrar las temperaturas medias junto con sus fechas:
+    
+print(" fechas y temperaturas medias")
+print(df[["fecha", "temperatura_media"]])
+
+#2 Filtrar periodos(primera semana y segunda quincena)
 
 print(diferencias.index(max(diferencias)) + 1)
 generationtime_ms	0.11861324310302734
@@ -264,4 +354,6 @@ print(respuesta.url)
 diarios = datos["daily"]
 print(diarios.keys())
  
+
+
 
